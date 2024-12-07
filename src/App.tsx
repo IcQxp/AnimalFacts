@@ -10,9 +10,7 @@ function App() {
       <Route path="/" element={<Navigate to="/products" />} />
       <Route path="/products" element={<ProductList />} />
       <Route path="/product/:id" element={<Product/>} />
-
       <Route path="/create-product" element={<CreatePage/>} />
-
     </Routes>
   );
 }

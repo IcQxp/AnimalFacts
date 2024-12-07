@@ -16,7 +16,7 @@ export const Card: FC<CardProps> = ({ id, title, text, createdDate, image, liked
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isRemovePopupVisible, setIsRemovePopupVisible] = useState<boolean>(false);
   const dispatch = useDispatch();
-
+console.log("test");
 
   const handleToggleLike = () => {
     setIsLiked(!isLiked);
