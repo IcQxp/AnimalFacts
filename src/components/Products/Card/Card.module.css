@@ -6,8 +6,50 @@
   max-height: 390px;
 }
 
-.card__link {
-  border-radius: "15px";
+.card__buttons__all {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+
+  width: 240px;
+  height: 63px;
+  margin: 5px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  justify-content: flex-end;
+}
+
+.tools__buttons {
+  width: 86%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+  width: 0;
+  animation: creating 0.2s ease;
+}
+
+.tools__change__button {
+  background: var(--lightBlue);
+  font-size: 1em;
+  border-radius: 10px 10px 0px 0px;
+  border: 0;
+  width: 200px;
+  height: 50%;
+  font-weight: 600;
+}
+
+.tools__delete__button {
+  font-weight: 600;
+  background: var(--red);
+  font-size: 1em;
+  color: #000;
+  height: 50%;
+  width: 200px;
+  border: 0;
+  border-radius: 0px 0px 10px 10px;
 }
 
 .card__buttons {
@@ -19,12 +61,19 @@
   border-radius: 10px;
 }
 
-
 .card__button__like {
   z-index: 1;
   border: 0;
   background-color: transparent;
   max-height: 24px;
+}
+
+.tools__buttons-active {
+  width: 200px;
+}
+
+.card__button__like-active.card__button__like:hover>svg>path:first-child {
+  fill: #fff;
 }
 
 .card__button__like>svg>path:first-child {
@@ -35,39 +84,25 @@
   fill: #242424
 }
 
-.card__button__like-active>svg>path:first-child:hover {
-  fill: red
-}
-
-.card__button__like-active>svg>path:last-child {
-  fill: red
-}
-
-.card__button__like-active>svg>path:first-child {
-  fill: red
-}
-
+.card__button__like-active>svg>path:last-child,
+.card__button__like-active>svg>path:first-child,
 .card__button__like:hover>svg>path {
   fill: red
 }
 
 .card__dropdownButton {
-  background-color: #FFF;
-  border: 1px solid #242424;
-  border-radius: 12px;
-  max-height: 24px;
-
-  box-sizing: content-box;
-  background-color: #FFF;
-  border: 1px solid #242424;
-  border-radius: 12px;
-  max-height: 20px;
-  padding: 1px;
-
-  border: 0;
   max-height: 20px;
   padding: 2px;
 
+  background-color: #FFF;
+  box-sizing: content-box;
+
+  border-radius: 12px;
+  border: 0;
+}
+
+.card__link {
+  border-radius: "15px";
 }
 
 .card__imageContainer {
@@ -110,65 +145,6 @@
   line-clamp: 2;
   -webkit-box-orient: vertical;
   text-align: justify;
-}
-
-.heart:hover>path {
-  fill: red;
-}
-
-.card__button__like-active.card__button__like:hover>svg>path:first-child  {
-  fill: #fff;
-}
-
-.card__buttons__all {
-  display: flex;
-  flex-direction: row;
-  gap: 5px;
-
-  width: 240px;
-  height: 63px;
-  margin: 5px;
-  position: absolute;
-  right: 0;
-  top: 0;
-  justify-content: flex-end;
-
-}
-
-.tools__buttons {
-  width: 86%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-
-  overflow: hidden;
-  width: 0;
-  animation: creating 0.2s ease;
-}
-
-.tools__change__button {
-  background: var(--lightBlue);
-  font-size: 1em;
-  border-radius: 10px 10px 0px 0px;
-  border: 0;
-  width: 200px;
-  height: 50%;
-  font-weight: 600;
-}
-
-.tools__delete__button {
-  font-weight: 600;
-  background: var(--red);
-  font-size: 1em;
-  color:#000;
-  height: 50%;
-  width: 200px;
-  border: 0;
-  border-radius: 0px 0px 10px 10px;
-}
-
-.tools__buttons-active {
-  width: 200px;
 }
 
 @keyframes creating {

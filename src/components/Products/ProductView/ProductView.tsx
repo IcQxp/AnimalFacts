@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { Product } from "../../../types";
+import { Product } from "../../../data/types";
 import styles from "./ProductView.module.css"
 import RemovePopup from "../../RemovePopup/RemovePopup";
 import { useNavigate } from "react-router-dom";
@@ -7,10 +7,10 @@ import { useDispatch } from "react-redux";
 import { removeProduct, toggleLike } from "../../../store/ProductsSlice";
 
 interface ProductViewProps {
-product:Product,
+  product: Product,
 }
 
-export const ProductView: FC<ProductViewProps> = ({product}) => {
+export const ProductView: FC<ProductViewProps> = ({ product }) => {
 
   const [isRemovePopupVisible, setIsRemovePopupVisible] = useState<boolean>(false);
   const navigate = useNavigate();

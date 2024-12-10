@@ -1,11 +1,10 @@
 import { useSelector } from "react-redux";
 import { Link, Navigate, useLocation, useParams } from "react-router-dom";
 import { RootState } from "../../../store";
-import { Product as ProductType } from "../../../types";
+import { Product as ProductType } from "../../../data/types";
 import styles from "./Product.module.css"
 import { ProductEdit } from "../../../components/Products/ProductEdit/ProductEdit";
 import { ProductView } from "../../../components/Products/ProductView/ProductView";
-
 
 export const Product = () => {
   const { id } = useParams<{ id: string }>();
@@ -16,7 +15,7 @@ export const Product = () => {
   if (!products.length || !product) {
     return <Navigate to="/" replace />;
   }
-  
+
   return (
     <div>
       <header className={styles.header}>
@@ -27,8 +26,8 @@ export const Product = () => {
         </div>
       </header>
       {location.pathname === `/product/${product?.id}` &&
-        <ProductView product={product}/>
-        }
+        <ProductView product={product} />
+      }
       {location.pathname.includes("dit") && <ProductEdit product={product} />}
     </div>
   )

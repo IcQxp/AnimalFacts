@@ -1,24 +1,16 @@
 import { FC, useState, useEffect } from "react";
-import { Product, validateProduct } from "../../../types";
+import { Product } from "../../../data/types";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./ProductEdit.module.css";
 import { Demo } from "../Demo/Demo";
 import { useDispatch } from "react-redux";
 import { updateProduct } from "../../../store/ProductsSlice";
+import { checkFields, validateProduct } from "../../../data";
+import { ProductInfo } from "../../EditComponents/ProductInfo";
+
 interface ProductEditProps {
   product?: Product;
 }
-
-const checkFields = (product: Product): boolean => {
-  return Boolean(
-    product.id &&
-    product.title &&
-    product.text &&
-    product.createdDate &&
-    product.image &&
-    product.liked !== undefined
-  );
-};
 
 export const ProductEdit: FC<ProductEditProps> = ({ product }) => {
 
@@ -90,23 +82,15 @@ export const ProductEdit: FC<ProductEditProps> = ({ product }) => {
     setErrors({});
   }
   return (
-    <div style={{ padding: "25px" }}>
+    <main className={styles.container}>
       {product && (
         <div>
           <div className={styles.back__button}>
             <Link to={`/product/${elem.id}`}><h1 className={styles["back__button-hover"]}>Вернуться к карточке</h1></Link>
           </div>
-          <h2>Текущее</h2>
-          <div className={styles.now__container}>
-            <h3>Текущее наименование товара:</h3>
-            <p>{product.title}</p>
-            <h3 className={styles.edit__step__title}>Текущее описание товара:</h3>
-            <p>{product.text}</p>
-            <h3 className={styles.edit__step__title}>Текущее URL на изображение вашего товара:</h3>
-            <p>{product.image}</p>
-          </div>
+          <ProductInfo title={product.title} text={product.text} image={product.image} />
           <h2>Изменение</h2>
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div className={styles.change__container} >
             <h3 className={styles.edit__step__title}>Название</h3>
             <input
               className={styles.title__input}
@@ -127,7 +111,6 @@ export const ProductEdit: FC<ProductEditProps> = ({ product }) => {
               rows={4}
               placeholder="Введите новое описание товара"
               maxLength={500}
-              style={{ resize: "none" }}
             />
             {errors.text && <span className={styles.error}>{errors.text}</span>}
             <h3 className={styles.edit__step__title}>Изображение</h3>
@@ -144,10 +127,10 @@ export const ProductEdit: FC<ProductEditProps> = ({ product }) => {
           <Demo title={elem.title} image={elem.image} text={elem.text} />
         </div>
       )}
-      <div style={{ display: "flex", flexDirection: "row", gap: "15px" }}>
+      <div className={styles.buttons__container} >
         <button className={styles.save__button} onClick={handleSaveChanges}>Сохранить</button>
         <button className={styles.reset__button} onClick={handleReset}>Сбросить</button>
       </div>
-    </div>
+    </main>
   );
 };

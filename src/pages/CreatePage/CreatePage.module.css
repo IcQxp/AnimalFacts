@@ -2,10 +2,6 @@
   background-color: var(--headerColor);
   padding: 10px;
 }
-.create__container {
-padding: 20px;
-
-}
 
 .back__button {
   display: flex;
@@ -15,43 +11,31 @@ padding: 20px;
   color: var(--linkDefault)
 }
 
-.back__button-hover:hover  {
+.back__button-hover:hover {
   color: #446CED
 }
 
-.container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-  }
-  
-  .form {
-    display: flex;
-    flex-direction: column;
-  }
-  .menu__step {
-    margin-top: 10px;
-  }
+.create__container {
+  padding: 20px;
+}
 
+.form {
+  display: flex;
+  flex-direction: column;
+}
 
-  .p {
-    margin: 10px 0 5px;
-    font-weight: bold;
-  }
-  
-  
-  
-  
-  
-  .error {
-    color: red;
-    font-size: 12px;
-  }
+.menu__step {
+  margin-top: 10px;
+}
 
-  
+.title__input {
+  max-width: 780px;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}
 
 .description__input {
   max-width: 780px;
@@ -61,19 +45,17 @@ padding: 20px;
   max-width: 780px;
 }
 
-  
-  .create__button {
-    width: 200px;
-    background-color: #44eb99;
-    border: 1px solid black;
-    font-size: 1em;
-    font-weight: 500;
-    border-radius: 5px;
-    padding: 10px;
-    cursor: pointer;
-  }
+.create__button {
+  width: 200px;
+  background-color: var(--green);
+  border: 1px solid black;
+  font-size: 1em;
+  font-weight: 500;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
 
-  .create__button:hover {
-    background-color: #14c06c;
-  }
-
+.create__button:hover {
+  background-color: #14c06c;
+}

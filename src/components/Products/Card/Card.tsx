@@ -1,8 +1,8 @@
 import { FC, useEffect, useRef, useState } from "react";
-import { Product } from "../../../types";
+import { Product } from "../../../data/types";
 import styles from "./Card.module.css";
-import HeartIcon from "./HeartIcon";
-import ToolsIcon from "./ToolsIcon";
+import HeartIcon from "../../ViewComponents/HeartIcon/HeartIcon";
+import ToolsIcon from "../../ViewComponents/ToolsIcon/ToolsIcon";
 import { Link, useNavigate } from "react-router-dom";
 import RemovePopup from "../../RemovePopup/RemovePopup";
 import { useDispatch } from "react-redux";
@@ -13,9 +13,12 @@ interface CardProps extends Product {
 }
 
 export const Card: FC<CardProps> = ({ id, title, text, createdDate, image, liked, onToggleLike }) => {
+
   const [isLiked, setIsLiked] = useState<boolean>(liked);
-  
   const [isRemovePopupVisible, setIsRemovePopupVisible] = useState<boolean>(false);
+  const [isPopupVisible, setPopupVisible] = useState<boolean>(false);
+  const popupRef = useRef<HTMLDivElement | null>(null);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -33,8 +36,6 @@ export const Card: FC<CardProps> = ({ id, title, text, createdDate, image, liked
     navigate(`/product/${id}/Edit`);
   };
 
-  const [isPopupVisible, setPopupVisible] = useState<boolean>(false);
-  const popupRef = useRef<HTMLDivElement | null>(null);
   const togglePopup = () => {
     setPopupVisible(!isPopupVisible);
   };
@@ -42,6 +43,7 @@ export const Card: FC<CardProps> = ({ id, title, text, createdDate, image, liked
   const toggleRemovePopup = () => {
     setIsRemovePopupVisible(!isRemovePopupVisible);
   };
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
@@ -53,23 +55,20 @@ export const Card: FC<CardProps> = ({ id, title, text, createdDate, image, liked
       document.removeEventListener("mouseup", handleClickOutside);
     };
   }, [popupRef]);
+
   return (
     <div className={styles.card}>
       {isRemovePopupVisible && (
-        <RemovePopup
-          id={id}
-          onConfirm={handleDelete}
-          onCancel={toggleRemovePopup}
+        <RemovePopup id={id} onConfirm={handleDelete} onCancel={toggleRemovePopup}
         />
       )}
       <div className={styles.card__buttons__all} ref={popupRef}>
-        {isPopupVisible && <div className={`${styles.tools__buttons} ${isPopupVisible && styles["tools__buttons-active"]}`}  >
-          
-          <button className={styles.tools__change__button} onClick={handleEdit}>Изменить</button>
-          <button className={styles.tools__delete__button} onClick={toggleRemovePopup}>Удалить</button>
-        </div>
+        {isPopupVisible &&
+          <div className={`${styles.tools__buttons} ${isPopupVisible && styles["tools__buttons-active"]}`}  >
+            <button className={styles.tools__change__button} onClick={handleEdit}>Изменить</button>
+            <button className={styles.tools__delete__button} onClick={toggleRemovePopup}>Удалить</button>
+          </div>
         }
-
         <div className={styles.card__buttons}>
           <button onClick={handleToggleLike} className={`${styles.card__button__like} ${isLiked && styles["card__button__like-active"]}`} >
             <HeartIcon />
