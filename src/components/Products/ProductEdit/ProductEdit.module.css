@@ -1,0 +1,85 @@
+.back__button {
+    display: flex;
+  }
+  
+  .back__button-hover {
+    color: var(--linkDefault)
+  }
+  
+  .back__button-hover:hover  {
+    color: #446CED
+  }
+
+  .now {
+    flex-direction: row;
+  }
+
+
+  .now__container {
+    background-color: #fff ;
+    border: 1px solid lightgray;
+border-radius: 15px;
+padding: 20px;
+  }
+
+  .now__image {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .edit__step__title{
+    margin-top: 15px;
+  }
+
+  .description__input {
+    max-width: 780px;
+  }
+  .title__input {
+    max-width: 780px;
+  }
+  .image__input {
+    max-width: 780px;
+  }
+
+  .reset__button {
+    background-color: #36c5f0;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 150px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+  }
+  .reset__button:hover {
+    background-color: #0e97bf;
+  }
+  .save__button {
+    background-color: #44eb99;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 150px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+  }
+  
+  .save__button:hover {
+  
+  background-color: #14c06c;
+}
+
+  .error {
+    color: red;
+    font-size: 12px;
+  }
+  @media (max-width:960px) {
+    .now {
+        flex-direction: column;
+
+    }
+    
+  
+  }

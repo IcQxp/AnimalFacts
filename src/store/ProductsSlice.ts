@@ -28,16 +28,22 @@ const productSlice = createSlice({
         product.liked = !product.liked;
       }
     },
+    updateProduct(state, action: PayloadAction<Product>) {
+      const updatedProduct = action.payload;
+      state.products = state.products.map(product =>
+        product.id === updatedProduct.id ? updatedProduct : product
+      );
+    },
   },
 });
 
 export const selectMaxProductId = (state: { products: ProductState }) => {
-  let arrayLength=state.products.products.length
+  let arrayLength = state.products.products.length
   if (!arrayLength)
     return 0;
-  return state.products.products[arrayLength-1].id;
+  return state.products.products[arrayLength - 1].id;
 };
 
 
-export const { setProducts, addProduct, removeProduct, toggleLike } = productSlice.actions;
+export const { setProducts, addProduct, removeProduct, toggleLike, updateProduct } = productSlice.actions;
 export default productSlice.reducer;

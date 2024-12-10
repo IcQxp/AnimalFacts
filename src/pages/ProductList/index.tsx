@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getProducts } from "../../API/api-utils";
 import { Card } from "../../components/Products/Card/Card";
 import { Product } from "../../types";
@@ -7,6 +7,15 @@ import { RootState } from "../../store";
 import { setProducts, toggleLike } from "../../store/ProductsSlice";
 import { Link } from "react-router-dom";
 import style from "./ProductList.module.css"
+
+const productsOnPage = 6;
+
+const getPagesCount = (productsCount: number): number =>{
+  if (!productsCount || productsCount===undefined)
+    return 1;
+  return Math.ceil(productsCount / productsOnPage);
+}
+
 
 function formatDate(DateForFormatted: Date): string {
   const pad = (i: number) => (i < 10) ? "0" + i : "" + i;
@@ -17,7 +26,7 @@ function normalizeData(data: any[]): Product[] {
   return data.map((item, index): Product => {
     let formattedDate = formatDate(new Date());
     return {
-      id: index + 1, 
+      id: index + 1,
       title: item.title,
       text: item.description,
       createdDate: formattedDate,
@@ -28,18 +37,20 @@ function normalizeData(data: any[]): Product[] {
 }
 
 export const ProductList = () => {
-  const [showFavorites,setShowFavorites] = useState<boolean>();
+  const [showFavorites, setShowFavorites] = useState<boolean>();
   const dispatch = useDispatch();
-
+  const [searchedText, setSearchedText] = useState<string>("");
   const products = useSelector((state: RootState) => state.products.products);
   const [dataApi, setDataApi] = useState<Product[]>()
+  const [page,setPage] = useState<number>(1);
+  const [dataPag,setDataPag] = useState<Product[]>();
+
   const handleToggleLike = (id: number) => {
     dispatch(toggleLike(id));
-    setDataApi(prevData => prevData&& 
-      prevData.map(product => 
+    setDataApi(prevData => prevData &&
+      prevData.map(product =>
         product.id === id ? { ...product, liked: !product.liked } : product
       ))
-    
   };
 
   useEffect(() => {
@@ -53,28 +64,82 @@ export const ProductList = () => {
     if (products.length === 0) {
       getData();
     } else {
-      setDataApi(products); 
+      setDataApi(products);
     }
   }, [dispatch, products]);
 
-  const filteredProducts = dataApi&&showFavorites
-    ? dataApi.filter(product => product.liked) 
-    : dataApi; 
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setShowFavorites(event.target.checked);
+  };
 
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchedText(event.target.value);
+    setPage(1);
+  }
+
+  const filteredProducts = dataApi && showFavorites
+    ? dataApi.filter(product => product.liked)
+    : dataApi;
+
+  const searchedProducts = useMemo(() => {
+    return filteredProducts?.filter(product =>
+      product.text.toLowerCase().includes(searchedText.toLowerCase()) ||
+      product.title.toLowerCase().includes(searchedText.toLowerCase())
+    ) || [];
+  }, [filteredProducts, searchedText]);
+
+
+const pagesCount = getPagesCount(searchedProducts.length);
+
+const handleNextPage = () => {
+ if (page< pagesCount)
+setPage(page+1);
+}
+
+const handlePrevPage = () => {
+  if (page> 1)
+    setPage(page-1);
+}
+
+useEffect(()=>{
+  const getProductsPage = (page:number) => {
+    const productsPag = [];
+  for (let i = (page-1)*6;i<page*6&&i<searchedProducts.length;i++)
+    productsPag.push(searchedProducts[i]);
+    return productsPag;
+  };
+  setDataPag(    getProductsPage(page));
+},[page,searchedProducts])
+
+const pages = Array.from({length: pagesCount},(_,index)=> index+1)
   return (
-    <div className="App">
-      <header className="App-header">
-      <button onClick={() => setShowFavorites(!showFavorites)}>Избранные карточки</button>
-      <Link to={`/create-product`}>asdasd</Link>
+    <div>
+      <header className={style.main__header}>
+        <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+          <input id="favourite" type="checkbox" onChange={handleCheckboxChange} />
+          <label htmlFor="favourite" ><h2 className={style.nav__elem}>Показать избранное</h2></label>
+        </div>
+        <input value={searchedText} onChange={handleSearch} className={style.search__input} />
+        <Link to={`/create-product`}><h2 className={style.nav__elem}>Добавить продукт</h2></Link>
       </header>
-        <main>
+      <main>
         <section className={style.list} >
           {
-            filteredProducts&&filteredProducts.map(elem => { return <Card key={elem.id} {...elem} onToggleLike={handleToggleLike}/>  })
+            dataPag && dataPag.map(elem => { return <Card key={elem.id} {...elem} onToggleLike={handleToggleLike} /> })
           }
         </section>
-        </main>
+        <div className={style.pagination__buttons}>
+        <button onClick={handlePrevPage} disabled={page===1} className={style.pagination__button}>{`<`}</button>
+        {pages.map (pageNumber => {return (<button
+              key={pageNumber}
+              onClick={() => setPage(pageNumber)}
+              className={`${style.pagination__button} ${page === pageNumber ? style["pagination__step-active"] : ''}`}
+            >
+              {pageNumber}
+            </button>)})}
+          <button onClick={handleNextPage} disabled={page===pagesCount} className={style.pagination__button}>{`>`}</button>
+        </div>
+      </main>
     </div>
   )
 }
-

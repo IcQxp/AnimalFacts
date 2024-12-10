@@ -3,7 +3,7 @@ import { Product } from "../../../types";
 import styles from "./Card.module.css";
 import HeartIcon from "./HeartIcon";
 import ToolsIcon from "./ToolsIcon";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import RemovePopup from "../../RemovePopup/RemovePopup";
 import { useDispatch } from "react-redux";
 import { removeProduct } from "../../../store/ProductsSlice";
@@ -13,10 +13,11 @@ interface CardProps extends Product {
 }
 
 export const Card: FC<CardProps> = ({ id, title, text, createdDate, image, liked, onToggleLike }) => {
-  const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [isLiked, setIsLiked] = useState<boolean>(liked);
+  
   const [isRemovePopupVisible, setIsRemovePopupVisible] = useState<boolean>(false);
   const dispatch = useDispatch();
-console.log("test");
+  const navigate = useNavigate();
 
   const handleToggleLike = () => {
     setIsLiked(!isLiked);
@@ -25,11 +26,11 @@ console.log("test");
 
   const handleDelete = (id: number) => {
     dispatch(removeProduct(id));
-    setPopupVisible(false);
+    setIsRemovePopupVisible(false);
   };
 
   const handleEdit = () => {
-    console.log("Изменить продукт:", title);
+    navigate(`/product/${id}/Edit`);
   };
 
   const [isPopupVisible, setPopupVisible] = useState<boolean>(false);
@@ -63,7 +64,8 @@ console.log("test");
       )}
       <div className={styles.card__buttons__all} ref={popupRef}>
         {isPopupVisible && <div className={`${styles.tools__buttons} ${isPopupVisible && styles["tools__buttons-active"]}`}  >
-          <button className={styles.tools__change__button} onClick={handleEdit} >Изменить</button>
+          
+          <button className={styles.tools__change__button} onClick={handleEdit}>Изменить</button>
           <button className={styles.tools__delete__button} onClick={toggleRemovePopup}>Удалить</button>
         </div>
         }

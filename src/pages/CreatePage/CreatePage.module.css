@@ -1,3 +1,24 @@
+.header {
+  background-color: var(--headerColor);
+  padding: 10px;
+}
+.create__container {
+padding: 20px;
+
+}
+
+.back__button {
+  display: flex;
+}
+
+.back__button-hover {
+  color: var(--linkDefault)
+}
+
+.back__button-hover:hover  {
+  color: #446CED
+}
+
 .container {
     max-width: 600px;
     margin: 0 auto;
@@ -7,44 +28,52 @@
     background-color: #f9f9f9;
   }
   
-  form {
+  .form {
     display: flex;
     flex-direction: column;
   }
-  
-  p {
+  .menu__step {
+    margin-top: 10px;
+  }
+
+
+  .p {
     margin: 10px 0 5px;
     font-weight: bold;
   }
   
-  input {
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-  }
   
-  input:focus {
-    border-color: #007bff;
-    outline: none;
-  }
+  
+  
   
   .error {
     color: red;
     font-size: 12px;
-    margin-top: -5px;
-    margin-bottom: 10px;
   }
 
-  .demo{
-    aspect-ratio: 1920/1080;
-    background-color: #0056b3;
-    width: 90%;
-  }
   
-  .demo__container {
-    display: flex;
-    justify-content: center;
-margin-bottom: 100px;
+
+.description__input {
+  max-width: 780px;
+}
+
+.image__input {
+  max-width: 780px;
+}
+
+  
+  .create__button {
+    width: 200px;
+    background-color: #44eb99;
+    border: 1px solid black;
+    font-size: 1em;
+    font-weight: 500;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
   }
+
+  .create__button:hover {
+    background-color: #14c06c;
+  }
+

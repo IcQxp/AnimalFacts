@@ -3,6 +3,7 @@
   position: relative;
   width: 250px;
   background-color: #FFF;
+  max-height: 390px;
 }
 
 .card__link {
@@ -80,7 +81,7 @@
 .card__image {
   border-radius: 15px;
   object-fit: contain;
-  height: 290px;
+  height: 100%;
   width: 100%;
   max-width: 240px;
 }
@@ -115,6 +116,10 @@
   fill: red;
 }
 
+.card__button__like-active.card__button__like:hover>svg>path:first-child  {
+  fill: #fff;
+}
+
 .card__buttons__all {
   display: flex;
   flex-direction: row;
@@ -142,15 +147,20 @@
 }
 
 .tools__change__button {
-  background: aqua;
+  background: var(--lightBlue);
+  font-size: 1em;
   border-radius: 10px 10px 0px 0px;
   border: 0;
   width: 200px;
   height: 50%;
+  font-weight: 600;
 }
 
 .tools__delete__button {
-  background: red;
+  font-weight: 600;
+  background: var(--red);
+  font-size: 1em;
+  color:#000;
   height: 50%;
   width: 200px;
   border: 0;

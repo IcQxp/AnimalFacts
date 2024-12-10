@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./CreatePage.module.css";
-import { Product } from "../../types";
+import { Product, validateProduct } from "../../types";
 import { addProduct, selectMaxProductId } from "../../store/ProductsSlice";
-import { Link, Navigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
+import { Demo } from "../../components/Products/Demo/Demo";
 
 export const CreatePage = () => {
   const dispatch = useDispatch();
@@ -12,7 +12,7 @@ export const CreatePage = () => {
   let [maxId, setMaxId] = useState<number>(maxIdFromStore);
 
   const [elem, setElem] = useState<Product>({
-    id: Date.now(),
+    id: 0,
     title: "",
     text: "",
     liked: false,
@@ -27,67 +27,61 @@ export const CreatePage = () => {
     setElem((prev) => ({ ...prev, [name]: value }));
   };
 
-  const validate = () => {
-    const newErrors: { title?: string; text?: string; image?: string } = {};
-    if (!elem.title) newErrors.title = "Название товара обязательно для заполнения.";
-    if (!elem.text) newErrors.text = "Описание товара обязательно для заполнения.";
-    if (!elem.image) newErrors.image = "URL изображения обязателен для заполнения.";
-    return newErrors;
-  };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const validationErrors = validate();
+    const validationErrors = validateProduct(elem);
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
-    const newProduct = { ...elem, id: maxId + 1 };
+    const newProduct = { ...elem, title: elem.title.substring(0, 50), text: elem.text.substring(0, 500), id: maxId + 1 };
     dispatch(addProduct(newProduct));
     setElem({ id: 0, title: "", text: "", liked: false, image: "", createdDate: new Date().toISOString() });
     setErrors({});
     setMaxId(maxId + 1);
   };
 
-  return (
-    <div>
-      <Link to={`/`}>
-        <p>Вернуться</p>
-      </Link>
-      <form onSubmit={handleSubmit}>
-        <p>Введите название товара</p>
+  return (<>
+    <header className={styles.header}>
+      <div className={styles.back__button}>
+        <Link to={`/`}>
+          <h2 className={styles["back__button-hover"]}>Вернуться</h2>
+        </Link>
+      </div>
+    </header>
+    <main className={styles.create__container}>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <h3 className={`${styles.menu__step}`}>Введите название товара</h3>
         <input
           name="title"
           value={elem.title}
           onChange={handleChange}
+          maxLength={50}
+          style={{ maxWidth: "780px" }}
         />
         {errors.title && <span className={styles.error}>{errors.title}</span>}
-        <p>Введите описание товара</p>
+        <h3 className={`${styles.menu__step}`}>Введите описание товара</h3>
         <textarea
+          className={styles.description__input}
           name="text"
           value={elem.text}
           onChange={handleChange}
           rows={4}
+          maxLength={500}
         />
         {errors.text && <span className={styles.error}>{errors.text}</span>}
-        <p>Введите URL на изображение вашего товара</p>
+        <h3 className={`${styles.menu__step}`}>Введите URL на изображение вашего товара</h3>
         <input
+          className={styles.image__input}
           name="image"
           value={elem.image}
           onChange={handleChange}
         />
         {errors.image && <span className={styles.error}>{errors.image}</span>}
-        <button type="submit">Создать товар</button>
+        <Demo title={elem.title} text={elem.text} image={elem.image} />
+        <button className={styles.create__button} type="submit">Создать товар</button>
       </form>
-      <div className={styles.demo__container}>
-        <div className={styles.demo}>
-          <div>
-          </div>
-          <hr></hr>
-          <div>
-          </div>
-        </div>
-      </div>
-    </div>
+    </main>
+  </>
   );
 };
