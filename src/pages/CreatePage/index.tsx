@@ -30,16 +30,18 @@ export const CreatePage = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const validationErrors = validateProduct(elem);
+    const elemFormatted = {...elem,title:elem.title.trim(),text:elem.text.trim(),image:elem.image.trim()}
+    const validationErrors = validateProduct(elemFormatted);
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
-    const newProduct = { ...elem, title: elem.title.substring(0, 50), text: elem.text.substring(0, 500), id: maxId + 1, createdDate: formatDate(new Date()) };
+    const newProduct = { ...elem, title: elem.title.substring(0, 50).trim(), text: elem.text.substring(0, 500).trim(), id: maxId + 1, createdDate: formatDate(new Date()),image:elem.image.trim() };
     dispatch(addProduct(newProduct));
     setElem({ id: 0, title: "", text: "", liked: false, image: "", createdDate: "" });
     setErrors({});
     setMaxId(maxId + 1);
+    alert("Успешно добавлено");
   };
 
   return (

@@ -71,16 +71,18 @@ export const ProductEdit: FC<ProductEditProps> = ({ product }) => {
   }
 
   const handleSaveChanges = () => {
-    const validationErrors = validateProduct(elem);
+    const elemFormatted = {...elem,title:elem.title.trim(),text:elem.text.trim(),image:elem.image.trim()}
+    const validationErrors = validateProduct(elemFormatted);
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
-    const newProduct = { ...elem };
-
+    const newProduct = { ...elemFormatted };
     dispatch(updateProduct(newProduct));
     setErrors({});
+    alert("Успешно изменено");
   }
+
   return (
     <main className={styles.container}>
       {product && (

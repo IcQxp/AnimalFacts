@@ -9,7 +9,11 @@ export function formatDate(DateForFormatted: Date): string {
     const errors: { title?: string; text?: string; image?: string } = {};
     if (!product.title) errors.title = "Название товара обязательно для заполнения.";
     if (!product.text) errors.text = "Описание товара обязательно для заполнения.";
-    if (!product.image) errors.image = "URL изображения обязателен для заполнения.";
+    if (!product.image) {
+      errors.image = "URL изображения обязателен для заполнения.";
+    } else if (!product.image.startsWith("http://")&&!product.image.startsWith("https://")) {
+      errors.image = "URL изображения должен начинаться с http:// или https://.";
+    }
     return errors;
   };
 
