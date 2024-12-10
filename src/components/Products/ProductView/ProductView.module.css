@@ -1,0 +1,133 @@
+.main__box {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.images__box {
+  display: flex;
+  justify-content: center;
+  padding: 5vh 5vw;
+  max-height: 100vh;
+  background-color: #fff;
+  width: 50%;
+}
+
+.product__image {
+
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.separator {
+  width: 0;
+  border: 1px solid black;
+  height: 100vh;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 50%;
+  padding: 3vw;
+  justify-content: center;
+}
+
+.product__title {
+  font-size: 1.5em;
+  line-height: 1.5em;
+  word-break: break-all;
+  max-height: 3em;
+  overflow: hidden;
+}
+
+.description {
+  font-size: 1.15em;
+  line-height: 1.5em;
+}
+
+.buttons__container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 15px;
+}
+
+.like__button {
+  background-color: #dde3e9;
+  width: 100px;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid black;
+  font-size: 1em;
+  cursor: pointer;
+
+  width: 200px;
+  font-weight: 500;
+}
+
+.like__button:hover {
+  background-color: #8a9fb3;
+}
+
+.change__button {
+  background-color: #36c5f0;
+  width: 100px;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid black;
+  font-size: 1em;
+  cursor: pointer;
+
+  width: 200px;
+  font-weight: 500;
+}
+
+.change__button:hover {
+  background-color: #0e97bf;
+}
+
+.delete__button {
+  background-color: #ff4a50;
+  width: 100px;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid black;
+  font-size: 1em;
+  width: 200px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.delete__button:hover {
+  background-color: #e60008;
+}
+
+.createdDate {
+  font-size: 1.15em
+}
+
+@media (max-width:960px) {
+  .main__box {
+    flex-direction: column;
+  }
+
+  .images__box {
+    width: 100%;
+  }
+
+  .product__image {
+    max-height: 40vh;
+  }
+
+  .separator {
+    width: 100vw;
+    height: 0;
+  }
+
+  .text {
+    max-width: 100%;
+  }
+}

@@ -67,8 +67,17 @@
   overflow: hidden;
   font-size: 1em;
   line-height: 1.5em;
+  word-break: break-word;
 }
 
+.title__value {
+  word-break: break-word;
+  font-size: 1.5em;
+  line-height: 1.5em;
+  max-height: 3em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 @media (max-width:960px) {
   .demo {

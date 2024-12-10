@@ -21,8 +21,10 @@ const checkFields = (product: Product): boolean => {
 };
 
 export const ProductEdit: FC<ProductEditProps> = ({ product }) => {
-  
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [errors, setErrors] = useState<{ title?: string; text?: string; image?: string }>({});
   const [elem, setElem] = useState<Product>({
     id: 0,
     title: "",
@@ -32,18 +34,17 @@ export const ProductEdit: FC<ProductEditProps> = ({ product }) => {
     createdDate: new Date().toISOString(),
   });
 
-  const [oldElem, setOldElem] = useState ({
+  const [oldElem, setOldElem] = useState({
     title: "",
     text: "",
     image: "",
   });
 
-  
   useEffect(() => {
     if (!product || !checkFields(product)) {
       navigate("/");
     } else {
-      
+
       setElem({
         id: product.id,
         title: product.title,
@@ -76,8 +77,7 @@ export const ProductEdit: FC<ProductEditProps> = ({ product }) => {
       image: oldElem.image,
     }));
   }
-const dispatch = useDispatch();
-  const [errors, setErrors] = useState<{ title?: string; text?: string; image?: string }>({});
+
   const handleSaveChanges = () => {
     const validationErrors = validateProduct(elem);
     if (Object.keys(validationErrors).length > 0) {
@@ -90,75 +90,63 @@ const dispatch = useDispatch();
     setErrors({});
   }
   return (
-    <div style={{padding:"25px"}}>
+    <div style={{ padding: "25px" }}>
       {product && (
         <div>
-
-<div className={styles.back__button}>
-<Link to={`/product/${elem.id}`}><h1 className={styles["back__button-hover"]}>Вернуться к карточке</h1></Link>
-        </div>
-        
+          <div className={styles.back__button}>
+            <Link to={`/product/${elem.id}`}><h1 className={styles["back__button-hover"]}>Вернуться к карточке</h1></Link>
+          </div>
           <h2>Текущее</h2>
-            <div className={styles.now__container}>
+          <div className={styles.now__container}>
             <h3>Текущее наименование товара:</h3>
-          <p>{product.title}</p>
-          <h3 className={styles.edit__step__title}>Текущее описание товара:</h3>
-          <p>{product.text}</p>
-          <h3 className={styles.edit__step__title}>Текущее URL на изображение вашего товара:</h3>
-              <p>{product.image}</p>
-            </div>
-            
-          
+            <p>{product.title}</p>
+            <h3 className={styles.edit__step__title}>Текущее описание товара:</h3>
+            <p>{product.text}</p>
+            <h3 className={styles.edit__step__title}>Текущее URL на изображение вашего товара:</h3>
+            <p>{product.image}</p>
+          </div>
           <h2>Изменение</h2>
-          <div style={{display:"flex",flexDirection:"column"}}>
+          <div style={{ display: "flex", flexDirection: "column" }}>
             <h3 className={styles.edit__step__title}>Название</h3>
-          <input
-          className={styles.title__input}
-            type="text"
-            name="title"
-            value={elem.title}
-            onChange={handleChange}
-            placeholder="Введите новое название товара"
-          maxLength={50}
-          />
-        {errors.title && <span className={styles.error}>{errors.title}</span>}
+            <input
+              className={styles.title__input}
+              type="text"
+              name="title"
+              value={elem.title}
+              onChange={handleChange}
+              placeholder="Введите новое название товара"
+              maxLength={50}
+            />
+            {errors.title && <span className={styles.error}>{errors.title}</span>}
             <h3 className={styles.edit__step__title}>Описание</h3>
-          
-          <textarea
-          className={styles.description__input}
-          name="text"
-          value={elem.text}
-          onChange={handleChange}
-          rows={4}
-            placeholder="Введите новое описание товара"
-            maxLength={500}
-            style={{resize:"none"}}
-        />
-        {errors.text && <span className={styles.error}>{errors.text}</span>}
+            <textarea
+              className={styles.description__input}
+              name="text"
+              value={elem.text}
+              onChange={handleChange}
+              rows={4}
+              placeholder="Введите новое описание товара"
+              maxLength={500}
+              style={{ resize: "none" }}
+            />
+            {errors.text && <span className={styles.error}>{errors.text}</span>}
             <h3 className={styles.edit__step__title}>Изображение</h3>
-
-          <input
-          className={styles.image__input}
-            type="text"
-            name="image"
-            value={elem.image}
-            onChange={handleChange}
-            placeholder="Введите новый URL изображения"
-          />
-        {errors.image && <span className={styles.error}>{errors.image}</span>}
-            </div>
-
-
-<Demo title={elem.title} image={elem.image} text={elem.text}/>
-          
-
+            <input
+              className={styles.image__input}
+              type="text"
+              name="image"
+              value={elem.image}
+              onChange={handleChange}
+              placeholder="Введите новый URL изображения"
+            />
+            {errors.image && <span className={styles.error}>{errors.image}</span>}
+          </div>
+          <Demo title={elem.title} image={elem.image} text={elem.text} />
         </div>
       )}
-      <div style={{display:"flex",flexDirection:"row",gap:"15px"}}>
-
-      <button className={styles.save__button} onClick={handleSaveChanges}>Сохранить</button>
-      <button className={styles.reset__button} onClick={handleReset}>Сбросить</button>
-
+      <div style={{ display: "flex", flexDirection: "row", gap: "15px" }}>
+        <button className={styles.save__button} onClick={handleSaveChanges}>Сохранить</button>
+        <button className={styles.reset__button} onClick={handleReset}>Сбросить</button>
       </div>
     </div>
   );

@@ -17,8 +17,8 @@ export const Demo: FC<DemoProps> = ({ title, image, text }) => {
         </div>
         <hr className={styles.demo__separator}></hr>
         <div className={styles.demo__text}>
-          <h2 className={styles.demo__title} style={{ wordBreak: "break-word", fontSize: "1.5em", lineHeight: "1.5em", maxHeight: "3em", overflow: "hidden", textOverflow: "ellipsis" }}> {title}</h2>
-          <p style={{ wordBreak: "break-word" }} className={styles.demo__description}>
+          <h2 className={`${styles.demo__title} ${styles.title__value}`} > {title}</h2>
+          <p className={styles.demo__description}>
             {text}
 
           </p>

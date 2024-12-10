@@ -1,3 +1,9 @@
+.popup__background {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
 .popup {
     position: fixed;
     top: 50%;
@@ -16,24 +22,31 @@
     font-size: 16px;
     color: #333;
   }
+
+  .buttons__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
   
   .confirmButton,
   .cancelButton {
-    padding: 10px 15px;
-    border: none;
+    color: #000;
+    width: 100px;
+    height: 30px;
     border-radius: 5px;
+    border: 1px solid black;
+    font-weight: 500;
+    font-size: 1em;
     cursor: pointer;
-    margin-right: 10px;
   }
   
   .confirmButton {
-    background-color: #d9534f; 
-    color: white;
+    background-color: var(--red); 
   }
   
   .cancelButton {
-    background-color: #5bc0de; 
-    color: white;
+    background-color: var(--lightBlue); 
   }
   
   .confirmButton:hover {

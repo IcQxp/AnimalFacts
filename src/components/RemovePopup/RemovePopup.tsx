@@ -8,12 +8,16 @@ interface RemovePopupProps {
 }
 
 const RemovePopup: React.FC<RemovePopupProps> = ({ id, onConfirm, onCancel }) => {
-  return (
+  return (<>
+    <div className={styles.popup__background} onClick={onCancel}></div>
     <div className={styles.popup}>
       <p>Вы уверены, что хотите удалить продукт с ID: {id}?</p>
+      <div className={styles.buttons__container}>
       <button onClick={() => onConfirm(id)} className={styles.confirmButton}>Удалить</button>
       <button onClick={onCancel} className={styles.cancelButton}>Отменить</button>
+      </div>
     </div>
+    </>
   );
 };
 

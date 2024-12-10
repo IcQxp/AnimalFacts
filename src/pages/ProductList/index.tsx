@@ -70,6 +70,7 @@ export const ProductList = () => {
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setShowFavorites(event.target.checked);
+    setPage(1);
   };
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,9 +78,12 @@ export const ProductList = () => {
     setPage(1);
   }
 
-  const filteredProducts = dataApi && showFavorites
-    ? dataApi.filter(product => product.liked)
-    : dataApi;
+
+  const filteredProducts = useMemo(() => {
+    return showFavorites
+      ? dataApi?.filter(product => product.liked) || []
+      : dataApi || [];
+  }, [dataApi, showFavorites]);
 
   const searchedProducts = useMemo(() => {
     return filteredProducts?.filter(product =>
